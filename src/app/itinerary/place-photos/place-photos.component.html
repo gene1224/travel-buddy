@@ -1,0 +1,8 @@
+<p class="showDetails color-blue" (click)="loadPhotos()" [attr.aria-expanded]="!isCollapsed" aria-controls="collapseBasic">
+    {{ isCollapsed ? 'Show' : 'Hide' }} Photos
+</p>
+<div [collapse]="isCollapsed">
+    <div class="masonry">
+        <figure *ngFor="let url of photoUrls" class="masonry-brick"><img [src]="url" class="masonry-img"></figure>
+    </div>
+</div>

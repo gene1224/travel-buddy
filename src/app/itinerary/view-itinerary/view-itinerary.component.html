@@ -1,0 +1,72 @@
+<section class="container-fluid banner create-bg">
+    <h1>
+        {{ title }}
+    </h1>
+</section>
+<div class="container">
+    <div class="center">
+        <h3>Itinerary Description</h3>
+        <p>
+            {{notes}}
+        </p>
+    </div>
+    <div class="places-col">
+        <div class="places">
+            <h3>Your Travel Destination</h3>
+            <p></p>
+            <div *ngIf="locationx.length == 0">No Location Added, Click <span (click)="openLocationListModal()" class="special-click color-pink">here</span>
+                to add more</div>
+            <div *ngIf="locationx.length != 0" [sortablejs]="locationx" [sortablejsOptions]="options">
+                <div *ngFor="let data of locationx; index as i" class="place">
+                    <div class="place-row">
+                        <div class="place-thumbnail">
+                            <img src="{{ preparePhotoSource(data) }}">
+                        </div>
+                        <div class="details">
+                            <h5>{{ data.name }}</h5>
+                            <p class="address">
+                                <i class="fas fa-map-marker color-pink"></i> {{data.formatted_address}}
+                            </p>
+                            <p class="types">
+                                {{ joinArray(data.types) }}
+                            </p>
+                            <app-taxi-calculator *ngIf="i != 0" [origin]="locationx[i-1].geometry.location"
+                                [destination]="data.geometry.location" [fromText]="locationx[i-1].name"></app-taxi-calculator>
+                            <app-place-details [placeId]="data.place_id"></app-place-details>
+
+                            <app-place-photos *ngIf="data.photos" [photos]="data.photos"></app-place-photos>
+                            <p *ngIf="data.notes">Destination Notes</p>
+                            <p>{{data.notes}}</p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <h3>
+                Itinerary Route
+            </h3>
+            <agm-map [latitude]="mapCenter.lat" [longitude]="mapCenter.lng">
+                <ng-container *ngIf="places.length != 0">
+                    <agm-direction [origin]="places[0]" [destination]="places[places.length-1]" [waypoints]="waypoints"
+                        [renderOptions]="renderOptions" [markerOptions]="markerOptions">
+                    </agm-direction>
+                    <agm-marker *ngFor="let item of locationx" [latitude]="item.geometry.location.lat" [longitude]="item.geometry.location.lng">
+                        <agm-info-window>
+                            <p><b>{{ item.name }}</b></p>
+                            <p>{{ item.formatted_address }}</p>
+                        </agm-info-window>
+                    </agm-marker>
+                </ng-container>
+            </agm-map>
+            
+                <div class="print_button no-print">
+                    <button class="btn btn-primary yellow-bg text-white" (click)="printPage()">
+                        Print This Itinerary
+                    </button>
+                </div>
+            
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,132 @@
+<section class="container-fluid banner create-bg">
+    <h1>
+        Create Itinerary
+    </h1>
+</section>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-8">
+            <div class="places-col">
+                <div class="create-stepper">
+                    <h1>Step 1 - Select Your Destinations <button class="btn btn-primary" (click)="openLocationListModal()"><i
+                                class="fa fa-plus"></i>
+                            Add Places</button></h1>
+                </div>
+                <div class="places">
+                    <p>Find certified travel destinations in Davao city at ease.</p>
+                    <p></p>
+                    <div *ngIf="locationx.length == 0">No Location Added, Click <span (click)="openLocationListModal()"
+                            class="special-click color-pink">here</span>
+                        to add more</div>
+                    <div *ngIf="locationx.length != 0" [sortablejs]="locationx" [sortablejsOptions]="options">
+                        <div *ngFor="let data of locationx; index as i" class="place">
+                            <div class="place-row">
+                                <div class="place-thumbnail">
+                                    <img src="{{ preparePhotoSource(data) }}">
+                                </div>
+                                <div class="details">
+                                    <h5>{{ data.name }}</h5>
+                                    <p class="address">
+                                        <i class="fas fa-map-marker color-pink"></i> {{data.formatted_address}}
+                                    </p>
+                                    <p class="types">
+                                        {{ joinArray(data.types) }}
+                                    </p>
+                                    <app-taxi-calculator *ngIf="i != 0" [origin]="locationx[i-1].geometry.location"
+                                        [destination]="data.geometry.location" [fromText]="locationx[i-1].name"></app-taxi-calculator>
+                                    <app-place-details [placeId]="data.place_id"></app-place-details>
+                                    <app-place-photos *ngIf="data.photos" [photos]="data.photos"></app-place-photos>
+                                    <p class="showDetails color-blue" (click)="data.add_notes = !data.add_notes">{{data.add_notes
+                                        ? 'Remove' : 'Add'}}
+                                        Notes</p>
+                                    <textarea class="form-control" *ngIf="data.add_notes" [ngModel]="data.notes"
+                                        (ngModelChange)="data.notes=$event" placeholder="Destination notes"></textarea>
+                                    <div class="controls">
+                                        <button class="btn btn-primary bg-red hover-bg-pink" (click)="removeLocation(data.place_id)"><i
+                                                class="fas fa-times"></i>
+                                            Remove Place</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <app-nearby-places (notify)="additionalPlace($event)" [origin]="data.name" [location]="data.geometry.location"></app-nearby-places>
+                            <hr>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <h3>
+                    Itinerary Route
+                </h3>
+                <agm-map [latitude]="mapCenter.lat" [longitude]="mapCenter.lng">
+                    <ng-container *ngIf="places.length != 0">
+                        <agm-direction [origin]="places[0]" [destination]="places[places.length-1]" [waypoints]="waypoints"
+                            [renderOptions]="renderOptions" [markerOptions]="markerOptions">
+                        </agm-direction>
+                        <agm-marker *ngFor="let item of locationx" [latitude]="item.geometry.location.lat" [longitude]="item.geometry.location.lng"
+                            [iconUrl]="iconLocator(item.types[0])">
+                            <agm-info-window>
+                                <p><b>{{ item.name }}</b></p>
+                                <p>{{ item.formatted_address }}</p>
+                            </agm-info-window>
+                        </agm-marker>
+                    </ng-container>
+                </agm-map>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-4">
+            <div class="details-col">
+                <h3>
+                    Itinerary Details
+                </h3>
+                <div class="itinerary-details">
+                    <p>
+                        Discover the wonders of Davao Davao's topography dazzles with a variety of picturesque
+                        landscapes. Fruit plantations and
+                        orchid farms, mantle volcano-fed hills and valleys. Virgin forests nurture rare wildlife. Coral
+                        islands
+                        lie on mirror flat water.
+                    </p>
+                    <div class="form-group">
+                        <label for="usr">Itinerary Title</label>
+                        <input type="text" class="form-control" id="usr" [ngModel]="title" (ngModelChange)="title=$event">
+                    </div>
+                    <div class="form-group">
+                        <label for="usr">Email</label>
+                        <input type="text" class="form-control" id="usr" [ngModel]="email" (ngModelChange)="email=$event">
+                        <small><i>We will email the link to non registered users.</i></small>
+                    </div>
+                    <div class="form-group" *ngIf="!addnotes">
+                        <p class="click-notes" (click)="addnotes = !addnotes">Add Itinerary Notes</p>
+                    </div>
+                    <div *ngIf="addnotes">
+                        <div class="form-group">
+                            <p class="click-notes" (click)="addnotes = !addnotes">Remove Itinerary Notes</p>
+                            <label for="usr">Itinerary Notes/Description</label>
+                            <textarea class="form-control" id="pwd" [ngModel]="notes" (ngModelChange)="notes=$event"></textarea>
+                        </div>
+                    </div>
+
+                    <div *ngIf="isLoggedIn" class="form-group">
+                        <label>
+                            <input type="checkbox" [checked]="isPublic == 0 ? true : false" (change)="isPublic = isPublic == 0 ? 1 : 0 " />
+                            Available to public
+                        </label>
+                    </div>
+                    <small class="small-xt">
+                        For non registered users, Your Itinerary will still be saved but you cannot modify or alter any
+                        data and can be accessed
+                        ONLY by the email link set to your email
+                    </small>
+                    <div class="form-group">
+                        <button class="btn bg-yellow text-white seve-btn" [swal]="createSwal">Save Itinerary</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<swal #createSwal title="Create Itinerary ?" type="question" [showCancelButton]="true" [focusCancel]="true" (confirm)="saveItinerary()">
+</swal>
+<swal #doneSwal title="Itinerary Created Succesfully!" type="success"></swal>
+<swal #duplicateSwal title="Location/Place Already Added" type="error"></swal>

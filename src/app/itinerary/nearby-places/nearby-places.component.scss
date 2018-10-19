@@ -1,0 +1,61 @@
+.places {
+  min-height: 400px;
+  margin-bottom: 20px;
+}
+
+.place-row {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 10px;
+  .place-thumbnail {
+    min-width: 110px;
+    width: 110px;
+    height: 110px;
+    background-size: cover !important;
+    text-align: center;
+    margin-left: 10px;
+  }
+
+  .details {
+    padding-left: 10px;
+    flex: 1;
+    textarea {
+      width: 100%;
+    }
+    > h5 {
+      font-size: 18px;
+      font-weight: bold;
+      margin: 3px 0 2px;
+    }
+    .types {
+      text-transform: uppercase;
+      font-size: 14px;
+      margin-bottom: 0;
+    }
+    .address {
+      text-transform: uppercase;
+      font-size: 14px;
+      margin-bottom: 0px;
+    }
+    .controls {
+      margin-top: 10px;
+      button {
+        padding: 5px 10px;
+        font-size: 14px;
+      }
+    }
+  }
+}
+
+
+.categories {
+    p {
+        span {
+            margin-right:10px;
+        }
+    }
+}
+
+.small-text {
+    font-size:70%;
+}

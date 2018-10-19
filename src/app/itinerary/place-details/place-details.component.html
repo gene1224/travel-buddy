@@ -1,0 +1,26 @@
+<p class="showDetails color-blue" (click)="showDetails()" [attr.aria-expanded]="!isCollapsed"
+    aria-controls="collapseBasic">{{ isCollapsed ? 'Show' : 'Hide' }} More Details
+</p>
+<div id="collapseBasic" [collapse]="isCollapsed">
+    <ul class="place-details">
+        <li *ngIf="details && details.result && details.result.formatted_phone_number">
+            <p><b>Phone Number </b>: {{ details.result.formatted_phone_number }}</p>
+        </li>
+        <li *ngIf="details && details.result && details.result.website">
+            <p><b>Website </b>: <a [href]="details.result.website">{{ details.result.website}}</a></p>
+        </li>
+        <li *ngIf="details && details.result && details.result.opening_hours">
+            <p><b>Store Hours</b></p>
+            <p [ngClass]="{'color-green': details.result.opening_hours.open_now }">{{
+                details.result.opening_hours.open_now ? "Open now" : "Closed"}}</p>
+            <ul *ngIf="details.result.opening_hours.weekday_text">
+                <li *ngFor="let item of details.result.opening_hours.weekday_text">
+                    <p>{{ item }}</p>
+                </li>
+            </ul>
+        </li>
+        <li *ngIf="details && details.result && details.result.rating">
+            <p><b>Rating </b>: {{details.result.rating}}/5</p>
+        </li>
+    </ul>
+</div> 

@@ -1,0 +1,12 @@
+ul.place-details {
+    list-style: none;
+    padding-inline-start:10px;
+    >li {
+       p  {
+           font-size: 14px;
+           text-transform: uppercase;
+           margin-bottom: 2px;
+       }
+    }
+}
+

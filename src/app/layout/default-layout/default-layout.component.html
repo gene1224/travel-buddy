@@ -1,0 +1,118 @@
+
+<header class="main-header">
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Baktas Davao</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a routerLink="/">Home</a></li>
+                <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" dropdown class="dropdown">
+                    <a dropdownToggle type="button" class="dropdown-toggle" aria-controls="dropdown-basic">
+                        Itinerary
+                    </a>
+                    <ul class="dropdown-menu" *dropdownMenu>
+                        <li>
+                            <a routerLink="/itinerary/instructions">Instructions</a>
+                        </li>
+                        <li>
+                            <a routerLink="/itinerary/create">Create Itinerary</a>
+                        </li>
+                        <li>
+                            <a routerLink="/itinerary/search">Search</a>
+                        </li>
+                    </ul>
+                </li>
+                <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" class="dropdown" dropdown>
+                    <a dropdownToggle type="button" class="dropdown-toggle" aria-controls="dropdown-basic">
+                        Tips and Tools
+                    </a>
+                    <ul class="dropdown-menu" *dropdownMenu>
+                        <li>
+                            <a routerLink="/events">Events</a>
+                        </li>
+                        <li>
+                            <a (click)="findMe()">Where Am I Now</a>
+                        </li>
+                        <li>
+                            <a routerLink="/taxicalulator">Taxi Calculator</a>
+                        </li>
+                    </ul>
+                </li>
+                <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a routerLink="/about">About</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" *ngIf="!checkLoggedIn()">
+                <li><a routerLink="/register"><i class="fab fa-avianex"></i> Sign Up</a></li>
+                <li><a routerLink="/login"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" *ngIf="checkLoggedIn()">
+                <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a routerLink="/account-management"><i
+                            class="fab fa-avianex"></i> My Account</a></li>
+                <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a routerLink="/logout"><i
+                            class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+</header>
+<section class="default-container">
+
+    <router-outlet></router-outlet>
+
+</section>
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-3 no-print ">
+                Baktas Davao
+                <ul>
+                    <li>
+                        <a href="#">Home</a>
+                    </li>
+                    <li>
+                        <a href="#">Itinerary</a>
+                    </li>
+                    <li>
+                        <a href="#">Events</a>
+                    </li>
+                    <li>
+                        <a href="#">Tips</a>
+                    </li>
+                    <li>
+                        <a href="#">About</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-xs-12 col-sm-3 no-print ">
+                External Links
+                <ul>
+                    <li>
+                        <a href="http://www.davaocity.gov.ph">Davao City Gov</a>
+                    </li>
+                    <li>
+                        <a href="http://www.davaocity.gov.ph">Department of Tourism</a>
+                    </li>
+                    <li>
+                        <a href="http://www.brokenshire.edu.ph">Brokenshire College of Davao</a>
+                    </li>
+                    <li>
+                        <a href="https://www.facebook.com/DavaoCityTourism/">City Tourism</a>
+                    </li>
+                </ul>
+
+            </div>
+            <div class="col-xs-12 col-sm-3">
+
+            </div>
+            <div class="logos-x col-xs-12 col-sm-3">
+                <p>
+
+                </p>
+                <img width="40px" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Department_of_Tourism_%28DOT%29.svg/220px-Department_of_Tourism_%28DOT%29.svg.png">
+                <img width="40px" src="https://upload.wikimedia.org/wikipedia/commons/c/c7/Davao_City_Ph_official_seal.png">
+                <img width="40px" [src]="'assets/brok.png'">
+            </div>
+        </div>
+
+    </div>
+</footer>
+<swal #doneSwall title="You Are Here!" text="" type="success"></swal>

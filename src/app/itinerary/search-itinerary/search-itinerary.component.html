@@ -1,0 +1,46 @@
+<section class="banner search-bg">
+    <h1>Search Itinerary</h1>
+</section>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-8">
+            <h2>Public Itineraries</h2>
+            <div class="form-group">
+                <input type='text' placeholder='Search Itineraries' class="form-control" (keyup)='updateFilter($event)' />
+            </div>
+            <ngx-datatable #table class="material" [sortType]="'multi'" [rows]="itineraries" [columns]="columns"
+                [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'" [limit]="10"
+                (select)='onSelectUser($event)' [selected]="selected" [selectionType]="'single'">
+            </ngx-datatable>
+        </div>
+        <div class="col-xs-12 col-sm-4" *ngIf="itemViewed.id">
+            <div>
+                <h2>Itinerary Destinations</h2>
+                <div class="btn-control">
+                    <a routerLink="/itinerary/copy/{{itemViewed.id}}" class="btn btn-primary bg-yellow text-white">Copy This Itinerary</a>
+                    <a routerLink="/itinerary/view/{{itemViewed.id}}" class="btn btn-primary bg-yellow text-white">View</a>
+                </div>                
+                <div *ngFor="let data of itemViewed.locations; index as i" class="place">
+                    <div class="place-row">
+                        <div class="place-thumbnail">
+                            <img src="{{ preparePhotoSource(data) }}">
+                        </div>
+                        <div class="details">
+                            <h5>{{ data.name }}</h5>
+                            <p class="address">
+                                <i class="fas fa-map-marker color-pink"></i> {{data.formatted_address}}
+                            </p>
+                            <p class="types">
+                                {{ joinArray(data.types) }}
+                            </p>
+                            
+                            <app-place-details [placeId]="data.place_id"></app-place-details>
+                            <app-place-photos *ngIf="data.photos" [photos]="data.photos"></app-place-photos>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

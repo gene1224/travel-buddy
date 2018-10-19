@@ -1,0 +1,72 @@
+.default-container {
+  // background: url('/assets/main_bg.jpg');
+  // background-repeat: no-repeat;
+  // background-size: cover;
+}
+.main-header {
+  .navbar {
+    height: 80px;
+    border: none;
+    border-bottom: 2px solid #fdc25e;
+    background: #fff;
+    margin-bottom: 0;
+    .navbar-brand {
+      padding: 30px 15px;
+      a {
+        color: #fdc25e;
+      }
+    }
+
+    .navbar-nav li > a {
+      padding: 30px 20px;
+      color: #fdc25e;
+      .fa {
+        font-size: 1.2em;
+      }
+    }
+    li.dropdown {
+      ul > li > a {
+        padding: 10px 20px;
+      }
+    }
+  }
+}
+
+.navbar-nav > .active > a,
+.navbar-nav > .active > a.active,
+.navbar-nav > .active > a:focus,
+.navbar-nav > .active > a:hover {
+  background: #fdc25e;
+  color: #fff !important;
+  font-weight: bold;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 250px;
+  background-color: #fdc25e;
+  ul {
+    list-style: none;
+    padding-inline-start: 0;
+    li {
+      a {
+        color: #fff;
+      }
+    }
+  }
+  .container {
+    padding-top: 50px;
+    .logos-x {
+      img {
+        width: 75px;
+        margin-left: 10px;
+      }
+    }
+  }
+}

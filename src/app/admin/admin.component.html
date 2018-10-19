@@ -1,0 +1,125 @@
+<div class="container">
+    <h2>Location Management</h2>
+    <div class="row">
+        <div class="col-xs-12 col-md-8">
+            <div class="form-group">
+                <input type='text' placeholder='Search Locations' class="form-control" (keyup)='updateFilter($event)' />
+            </div>
+            <ngx-datatable #table class="material" [sortType]="'multi'" [rows]="places" [columns]="[{name:'Name'},{address:'Address'}]"
+                [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'" [limit]="10"
+                (select)='onSelect($event)' [selected]="selected" [selectionType]="'single'">
+            </ngx-datatable>
+        </div>
+        <div class="col-xs-12 col-md-4">
+            <div class="panel">
+                <div class="panel-heading">
+                    <b>Location Details</b>
+                </div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Name</label>
+                        <input type="text" [(ngModel)]="dataSelected.name" class="form-control" placeholder="Location Name"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Address</label>
+                        <input type="text" [(ngModel)]="dataSelected.address" class="form-control" placeholder="Location Address"
+                            required>
+                    </div>
+                    <div class="form-group control-buttons">
+                        <button [swal]="placesSwal" class="btn btn-primary"><i class="fas fa-plus"></i> {{
+                            dataSelected.id ? 'Update' :
+                            'Add'}} Location</button>
+                        <button [swal]="deletePlace" *ngIf="dataSelected.id" class="btn btn-warngin"><i class="fas fa-trash"></i>
+                            Delete
+                            Location</button>
+                        <button class="btn btn-primary" (click)="dataSelected = {}">Clear</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <h2>
+        User Management
+    </h2>
+    <div class="row">
+        <div class="col-xs-12 col-md-8">
+            <div class="form-group">
+                <input type='text' placeholder='Search Users' class="form-control" (keyup)='updateUserFilter($event)' />
+            </div>
+            <ngx-datatable #tableUsers class="material" [sortType]="'multi'" [rows]="users" [columns]="columns"
+                [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'" [limit]="10"
+                (select)='onSelectUser($event)' [selected]="userSelect" [selectionType]="'single'">
+            </ngx-datatable>
+        </div>
+        <div class="col-xs-12 col-md-4" *ngIf="userSelected.id">
+            <div class="panel">
+                <div class="panel-heading">
+                    <b>User Details</b>
+                </div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Name</label>
+                        <input type="text" [(ngModel)]="userSelected.first_name" class="form-control" placeholder="First Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Name</label>
+                        <input type="text" [(ngModel)]="userSelected.last_name" class="form-control" placeholder="Last Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Address</label>
+                        <input type="text" [(ngModel)]="userSelected.email" class="form-control" placeholder="Email">
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" [checked]="userSelected.isAdmin == 1 ? true : false" (change)="userSelected.isAdmin = userSelected.isAdmin == 0 ? 1 : 0 " />
+                            Set to Admin
+                        </label>
+                    </div>
+                    <div class="form-group control-buttons">
+                        <button [swal]="userSwal" class="btn btn-primary"><i class="fas fa-plus"></i> {{
+                            userSelected.id ? 'Update' :
+                            'Add'}} User</button>
+                        <button *ngIf="userSelected.id" [swal]="deleteUserID" class="btn btn-warngin"><i class="fas fa-trash"></i>
+                            Delete
+                            User</button>
+                    </div>
+                    <div>
+
+                        <b>Reset User Password</b>
+
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">New Password</label>
+                            <input type="text" [(ngModel)]="userSelected.npassword" class="form-control" placeholder="New Password">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Confirm Password</label>
+                            <input type="text" [(ngModel)]="userSelected.cpassword" class="form-control" placeholder="Confirm Password">
+                        </div>
+                        <div class="form-group control-buttons">
+                            <button [swal]="passSwal" class="btn btn-primary"><i class="fas fa-plus"></i> Update
+                                Password</button>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<swal #placesSwal title="Confirm Location Details ?" type="question" [showCancelButton]="true" [focusCancel]="true"
+    (confirm)="sendLocation(dataSelected)"></swal>
+<swal #userSwal title="Confirm User Details ?" type="question" [showCancelButton]="true" [focusCancel]="true" (confirm)="sendUser(userSelected)">
+</swal>
+<swal #passSwal title="Confirm User Details ?" type="question" [showCancelButton]="true" [focusCancel]="true" (confirm)="editPassword(userSelected)">
+</swal>
+<swal #deleteUserID title="Delete Account?" type="error" [showCancelButton]="true" [focusCancel]="true" (confirm)="deleteUser(userSelected)">
+</swal>
+<swal #deletePlace title="Delete Location?" type="error" [showCancelButton]="true" [focusCancel]="true" (confirm)="deleteLocation(dataSelected)">
+</swal>
+
+<swal #doneSwal title="Action Complete" type="success"></swal>
+<swal #invalidPass title="Passowrd Does Not Match" type="error"></swal>

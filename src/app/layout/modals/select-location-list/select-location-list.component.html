@@ -1,0 +1,46 @@
+<div class="modal-header">
+    <h4 class="modal-title pull-left">Select Places</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+
+</div>
+<div class="modal-body">
+    <label>Search Places</label>
+    <input class="form-control search" (change)="searchPlace()" [(ngModel)]="searchQuery" placeholder="Example: People's Park of Davao">
+    <p class="category-filter">
+        <span class="showDetails color-blue" (click)="dataLocations = unfilteredData">All ({{ unfilteredData.length }})</span>
+        <span class="showDetails color-blue" (click)="dataLocations = restaurants">Food/Restaurant ({{
+            restaurants.length }})</span>
+        <span class="showDetails color-blue" (click)="dataLocations = hotels">Inn/Hotels
+            ({{ hotels.length }})</span>
+        <span class="showDetails color-blue" (click)="dataLocations = establishment">Establishment ({{
+            establishment.length }})</span>
+    </p>
+    <div class="places">
+        <div *ngFor="let data of dataLocations" class="place">
+            <div class="place-row">
+                <div class="place-thumbnail">
+                    <img src="{{preparePhotoSource(data)}}">
+                </div>
+                <div class="details">
+                    <h5>{{ data.name }}</h5>
+                    <p class="address">
+                        {{data.formatted_address}}
+                    </p>
+                    <p class="types">
+                        {{ joinArray(data.types) }}
+                    </p>
+                    <app-place-details [placeId]="data.place_id"></app-place-details>
+                    <div class="controls">
+                        <button class="btn btn-primary" (click)="addLocation(data)"><i class="fas fa-plus"></i> Add
+                            Place</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" (click)="onCancel()">Close</button>
+</div>

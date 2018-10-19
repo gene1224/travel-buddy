@@ -1,0 +1,52 @@
+.place-row {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 10px;
+  .place-thumbnail {
+    min-width: 110px;
+    width: 110px;
+    height: 110px;
+    background-size: cover !important;
+    text-align: center;
+    margin-left: 10px;
+  }
+
+  .details {
+    padding-left: 10px;
+    > h5 {
+      font-weight: bold;
+      margin: 3px 0 0px;
+    }
+    .types {
+      text-transform: uppercase;
+      font-size: 14px;
+      margin-bottom: 0;
+    }
+    .address {
+      text-transform: uppercase;
+      font-size: 14px;
+      margin-bottom: 0px;
+    }
+    .controls {
+      button {
+        padding: 5px 10px;
+        font-size: 14px;
+      }
+    }
+  }
+}
+
+
+.modal-body {
+    position: relative;
+    padding: 15px;
+    max-height: 500px;
+    overflow-x: hidden;
+}
+
+.category-filter {
+    span {
+        margin-left: 10px;
+        font-size: 14px;
+    }
+}

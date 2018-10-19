@@ -1,0 +1,78 @@
+<section class="container-fluid banner create-bg">
+    <h1>
+        Account Management
+    </h1>
+</section>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-6">
+            <h3>User Details</h3>
+            <div class="form-group">
+                <input [ngModel]="email" (ngModelChange)="email=$event" type="email" class="form-control" placeholder="E-mail">
+            </div>
+            <div class="form-group">
+                <input [ngModel]="first_name" (ngModelChange)="first_name=$event" type="email" class="form-control"
+                    placeholder="First Name">
+            </div>
+            <div class="form-group">
+                <input [ngModel]="last_name" (ngModelChange)="last_name=$event" type="email" class="form-control"
+                    placeholder="Last Name">
+            </div>
+
+            <div class="form-group">
+                <button class="btn bg-yellow text-white" (click)="updateUser()">Update Details</button>&nbsp;
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-6">
+            <h3>Password Management</h3>
+            <div class="form-group">
+                <input [ngModel]="oldpassword" (ngModelChange)="oldpassword=$event" type="password" class="form-control"
+                    placeholder="Password">
+            </div>
+            <div class="form-group">
+                <input [ngModel]="password" (ngModelChange)="password=$event" type="password" class="form-control"
+                    placeholder="Password">
+            </div>
+            <div class="form-group">
+                <input [ngModel]="cpassword" (ngModelChange)="cpassword=$event" type="password" class="form-control"
+                    placeholder="Confirm Password">
+            </div>
+            <div class="form-group">
+                <button class="btn bg-yellow text-white" (click)="updatePass()">Update Password</button>&nbsp;
+            </div>
+            <h3>Delete Account</h3>
+            <button class="btn btn-danger">Delete Account</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <h3>
+                My Itinerary
+            </h3>
+            <table class="table itinerary-list">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Desciption</th>
+                        
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of itineraries">
+                        <td><a routerLink="/itinerary/view/{{item.id}}"> {{ item.title }}</a></td>
+                        <td>{{ item.notes }}</td>
+                        
+                        <td><a routerLink="/itinerary/edit/{{item.id}}">View/Edit</a>&nbsp;<a (click)="deleteItinerary(item.id)">Delete</a></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<swal #invalidPassword title="Password Does Not Match" type="error"></swal>
+<swal #doneSwal title="Account Updated" type="success"></swal>
+<swal #deleteSwal title="Delete Itinerary" type="warning" [showCancelButton]="true" [focusCancel]="true"></swal>
+<swal #deactivate title="Deactivate Account" type="warning"></swal>

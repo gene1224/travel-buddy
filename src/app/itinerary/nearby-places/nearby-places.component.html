@@ -1,0 +1,36 @@
+<div class="nearby-places">
+    <p class="showDetails color-blue" (click)="showPlaces()">{{ !showNearbyPlaces ? 'Show' : 'Hide' }} Nearby Places
+        (2km radius)</p>
+    <div *ngIf="showNearbyPlaces" class="categories">
+        <p><span class="showDetails color-blue" (click)="this.dataLocations = oldData">All ({{ oldData.length }})</span>
+            <span class="showDetails color-blue" (click)="showFoods()">Food/Restaurant ({{ restaurants.length }})</span><span
+                class="showDetails color-blue" (click)="showHotels()">Inn/Hotels ({{ this.hotels.length }})</span></p>
+    </div>
+    <carousel *ngIf="showNearbyPlaces" [noPause]="noPause" [showIndicators]="false">
+        <slide *ngFor="let data of dataLocations">
+            <div class="place">
+                <div class="place-row">
+                    <div class="place-thumbnail">
+                        <img src="{{_addressUtilService.preparePhotoSource(data)}}">
+                    </div>
+                    <div class="details">
+                        <h5>{{ data.name }}</h5>
+                        <p class="address">
+                            {{data.vicinity}}
+                        </p>
+                        <p class="types">
+                            {{ _addressUtilService.joinArray(data.types) }}
+                        </p>
+                        <app-taxi-calculator class="small-text" [origin]="data.geometry.location" [destination]="location"
+                            [fromText]="origin"></app-taxi-calculator>
+                        <app-place-details [placeId]="data.place_id"></app-place-details>
+                        <div class="controls">
+                            <button class="btn btn-primary" (click)="addLocation(data)"><i class="fas fa-plus"></i> Add
+                                Place</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </slide>
+    </carousel>
+</div>

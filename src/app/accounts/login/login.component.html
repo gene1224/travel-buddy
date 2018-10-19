@@ -1,0 +1,22 @@
+<div class="main-login">
+    <div class="login-form-cont">
+        <div class="logo-cont">
+            <img [src]="'assets/login-logo.png'" width="240px">
+            <p>Baktas Dabaw - Login</p>
+        </div>
+        <div class="form-group">
+
+            <input [ngModel]="email" (ngModelChange)="email=$event" type="email" class="form-control" placeholder="E-mail">
+        </div>
+        <div class="form-group">
+
+            <input [ngModel]="password" (ngModelChange)="password=$event" type="password" class="form-control" placeholder="Password">
+        </div>
+        <div class="form-group">
+            <p><a href="#" class="color-yellow">Forgot Password</a></p>
+            <button class="btn bg-yellow text-white" (click)="login()">Login</button>&nbsp;
+            <button class="btn bg-yellow text-white">Register</button>
+        </div>
+    </div>
+</div>
+<swal #badLoginSwal title="Invalid Credentials" type="error">
